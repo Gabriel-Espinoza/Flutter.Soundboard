@@ -1,7 +1,10 @@
 import 'dart:async';
 import 'theme.dart';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:audioplayer/audioplayer.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 void main() => runApp(new Botonera());
 
@@ -18,6 +21,7 @@ class _BotoneraState extends State<Botonera>{
     return new MaterialApp(
       title: 'Music Player',
       theme: a,
+      
       home: new GridView(
         gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
         children: <Widget>[
@@ -51,19 +55,34 @@ class _BotoneraState extends State<Botonera>{
     );
   }
   
-  AudioPlayer apStar = new AudioPlayer();
-  PlayerState psStar = PlayerState.stopped;
+  AudioPlayer _coinPlayerCoin = new AudioPlayer();
+  PlayerState _coinState = PlayerState.stopped;
   Future<Null> _playAudio(String sound) async {
-    if(psStar == PlayerState.playing){
-      final result = apStar.pause();
-      if(result == 1)
-        psStar = PlayerState.paused;
-    }
-    else
+
+    final bleh = await _copyLocalAssets();
+    final result = await _coinPlayerCoin.play(bleh, isLocal: true);
+  }
+
+
+
+   Future<String> _copyLocalAssets() async {
+    final bundleDir = 'assets/audio';
+    final filename = 'coin.wav';
+    final localDir = await getApplicationDocumentsDirectory();
+    final localAssetFile1 = await _copyLocalAsset(localDir, bundleDir, filename);
+    final finalpath = localAssetFile1.path;
+    return finalpath;
+  }
+
+  Future<File> _copyLocalAsset(Directory localDir, String bundleDir, String assetName) async {
+    final data = await rootBundle.load('$bundleDir/$assetName');
+    final bytes = data.buffer.asUint8List();
+    final localAssetFile = File('${localDir.path}/$assetName');
+    final fileExists = await localAssetFile.exists();
+    if(!fileExists)
     {
-      final result = await apStar.play("https://api.soundcloud.com/tracks/434370309/stream?secret_token=s-tj3IS&client_id=LBCcHmRB8XSStWL6wKH2HPACspQlXg2P");
-      if (result == 1) 
-        setState(() => psStar = PlayerState.playing);
+      await localAssetFile.writeAsBytes(bytes, flush: true);
     }
+    return localAssetFile;
   }
 }
