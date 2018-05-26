@@ -1,5 +1,5 @@
-name: botonera
-description: A new Flutter project.
+name: MonopolyGamerSoundboard
+description: A soundboard for monopoly gamer table game.
 
 dependencies:
   flutter:
@@ -8,15 +8,18 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.0
-  fluttery: 0.0.5
-  fluttery_audio: 0.0.3
   audioplayer:
   path_provider:
-  
+  flutter_launcher_icons: "^0.3.2"
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
+flutter_icons:
+  image_path: "assets/star.png" 
+  android: true
+  ios: true
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec
@@ -31,7 +34,15 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/coin.wav
+    - assets/coin.mp3
+    - assets/coin.png
+    - assets/star.mp3
+    - assets/star.png
+    - assets/pipe.mp3
+    - assets/pipe.png
+    - assets/dies.mp3
+    - assets/dies.png
+    - assets/background.jpg
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
 
@@ -58,5 +69,12 @@ flutter:
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #
+  fonts:
+      - family: emulogic
+        fonts:
+          - asset: fonts/emulogic.ttf
+      - family: SuperMarioBrossWii
+        fonts:
+          - asset: fonts/SuperMarioBrosWii.otf
   # For details regarding fonts from package dependencies, 
   # see https://flutter.io/custom-fonts/#from-packages
