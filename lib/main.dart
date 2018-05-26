@@ -2,16 +2,12 @@ import 'theme.dart';
 import 'package:flutter/material.dart';
 import 'SoundManager.dart';
 
-
 void main() => runApp(new Botonera());
 
 class Botonera extends StatefulWidget{
    @override
   _BotoneraState createState() => new _BotoneraState();
 }
-
-enum PlayerState { stopped, playing, paused }
-
 
 class _BotoneraState extends State<Botonera>{
   

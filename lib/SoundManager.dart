@@ -5,7 +5,6 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:audioplayer/audioplayer.dart';
 import 'package:flutter/material.dart';
 
-
 class Sound {
   String icon;
   String sound;
@@ -22,9 +21,9 @@ class SoundList{
     new Sound("coin.png", "coin.mp3"), 
     new Sound("star.png", "star.mp3"), 
     new Sound("pipe.png", "pipe.mp3"), 
+    new Sound("bowser.png", "bowser.mp3"), 
+    new Sound("victory.png", "victory.mp3"), 
     new Sound("dies.png", "dies.mp3"), 
-    // new Sound("boss.png", "boss.mp3"), 
-    // new Sound("pow.png", "pow.mp3"), 
   ];
 
   List<RaisedButton> generateButtons(SoundsManager manager){
