@@ -19,6 +19,7 @@ class _BotoneraState extends State<Botonera>{
     
     return new MaterialApp(
       theme: a,
+      debugShowCheckedModeBanner: false,
       home: new Scaffold(
         appBar: new AppBar(
           title: new Text("Super Mario Gamer Soundboard"),

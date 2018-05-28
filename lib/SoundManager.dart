@@ -2,28 +2,30 @@ import 'dart:io';
 import 'dart:async';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:audioplayer/audioplayer.dart';
+import 'package:audioplayers/audioplayer.dart';
 import 'package:flutter/material.dart';
 
 class Sound {
   String icon;
   String sound;
+  bool shouldPlayOnGlobalInstance;
 
-  Sound(String icon, String sound) {
+  Sound(String icon, String sound, bool shouldPlayOnGlobalInstance) {
     this.icon = icon;
     this.sound = sound;
+    this.shouldPlayOnGlobalInstance = shouldPlayOnGlobalInstance;
   }
 }
 
 class SoundList{
   final assetsDir = "assets";
   final list = <Sound>[//posteriormente puedo llenarlo de algún lugar dinámico, como un archivo de configuración o algo así.
-    new Sound("coin.png", "coin.mp3"), 
-    new Sound("star.png", "star.mp3"), 
-    new Sound("pipe.png", "pipe.mp3"), 
-    new Sound("bowser.png", "bowser.mp3"), 
-    new Sound("victory.png", "victory.mp3"), 
-    new Sound("dies.png", "dies.mp3"), 
+    new Sound("coin.png", "coin.mp3", false), 
+    new Sound("star.png", "star.mp3", true), 
+    new Sound("pipe.png", "pipe.mp3", false), 
+    new Sound("bowser.png", "bowser.mp3", true), 
+    new Sound("victory.png", "victory.mp3", true), 
+    new Sound("dies.png", "dies.mp3", false), 
   ];
 
   List<RaisedButton> generateButtons(SoundsManager manager){
@@ -51,8 +53,13 @@ class SoundsManager {
   Future playSound(Sound sound) async{
     await copySoundsToLocalDirectory();
     final path = await _getSoundPath(sound);
-    // final result = await _audioPlayer.play(path, isLocal: true);
-    await _audioPlayer.play(path, isLocal: true);
+    if(sound.shouldPlayOnGlobalInstance)
+      await _audioPlayer.play(path, isLocal: true);
+    else {
+      var ap = new AudioPlayer();
+      ap.play(path, isLocal: true);
+
+    }
   }
 
   Future copySoundsToLocalDirectory() async{
